@@ -128,10 +128,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   props: {
-    P_imageSrc: String },
+    P_imageSrc: String,
+    P_imageWidth: Number,
+    P_imageHeight: Number,
+    P_rate: Number },
 
 
   data: function data() {
@@ -144,17 +149,25 @@ var _default =
       offsetY: 0,
       transX: 0,
       transY: 0,
-      transZ: 0 };
+      transZ: 0,
+      pixelRatio: 1,
+      drawX: 0,
+      drawY: 0,
+      left: 0,
+      top: 0,
+      tempH: 0,
+      tempH_01: 0 };
 
   },
 
   //生命周期函数
-  created: function created() {var _this = this;
+  created: function created() {var _this2 = this;
     uni.getSystemInfo({
       success: function success(res) {
         //console.log(res)
-        _this.windowWidth = res.windowWidth;
-        _this.windowHeight = res.windowHeight;
+        _this2.windowWidth = res.windowWidth;
+        _this2.windowHeight = res.windowHeight;
+        _this2.pixelRatio = res.pixelRatio;
       } });
 
   },
@@ -172,6 +185,59 @@ var _default =
       this.transY = moveY - this.startY;
       this.offsetX = this.transX;
       this.offsetY = this.transY;
+    },
+
+    creatImg: function creatImg() {var _this3 = this;
+      this.FX_01();
+      setTimeout(function () {
+        _this3.FX_02();
+      }, 500);
+      setTimeout(function () {
+        _this3.FX_03();
+      }, 1000);
+    },
+
+    FX_01: function FX_01() {var _this4 = this;
+      var query = this.createSelectorQuery();
+      query.select(".crop_box").boundingClientRect(function (data) {
+        _this4.left = data.left;
+        _this4.top = data.top;
+        //console.log(res)
+        console.log(_this4.left);
+        console.log(_this4.top);
+      }).exec();
+    },
+
+    FX_02: function FX_02() {
+      this.tempH = (this.windowWidth - 20) / this.P_rate;
+      this.tempH_01 = (this.windowHeight - 50 - this.tempH) / 2;
+      this.drawX = this.left - 10;
+      this.drawY = this.top - 25 - this.tempH_01;
+      //console.log(this.P_imageSrc,0,tempH_01,this.windowWidth - 20,tempH)
+      console.log("-----------------------------------");
+      console.log(this.drawX, this.drawY);
+    },
+
+    FX_03: function FX_03() {
+      var _this = this;
+      var ctx = uni.createCanvasContext("myCanvas", _this);
+      console.log(_this.P_imageSrc, 0, _this.tempH_01, _this.windowWidth - 20, _this.tempH);
+      ctx.drawImage(_this.P_imageSrc, 0, _this.tempH_01, _this.windowWidth - 20, _this.tempH);
+      console.log(_this.drawX, _this.drawY);
+      ctx.draw();
+      uni.canvasToTempFilePath({
+        canvasId: "myCanvas",
+        x: _this.drawX,
+        y: _this.drawY,
+        destWidth: 200,
+        destHeight: 200,
+        success: function success(res) {
+          console.log(res);
+        },
+        fail: function fail(err) {
+          console.log(err);
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

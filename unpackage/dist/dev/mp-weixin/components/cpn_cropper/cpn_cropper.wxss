@@ -2,5 +2,5 @@
 .container {display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-pack: center;-webkit-justify-content: center;justify-content: center;-webkit-box-align: center;-webkit-align-items: center;align-items: center;}
 .img-view {width: 320px;height: 240px;}
 .img {position: absolute;}
-.crop_box {width: 200px;height: 200px;border: 1px solid #2C405A;z-index: 998;position: absolute;}
+.crop_box {width: 200px;height: 200px;border: 1px solid #2C405A;z-index: 998;position: absolute;left: 0;}
 

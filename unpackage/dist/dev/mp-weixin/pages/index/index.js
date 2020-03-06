@@ -162,7 +162,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       imageSrc: "",
-      showCropper: false };
+      showCropper: false,
+      imageWidth: 0,
+      imageHeight: 0,
+      rate: 0 };
 
   },
 
@@ -172,13 +175,22 @@ __webpack_require__.r(__webpack_exports__);
 
   methods: {
     chooseImg: function chooseImg() {var _this = this;
+      var that = this;
       uni.chooseImage({
         count: 1,
         sizeType: ['compressed'],
         sourceType: ['album'],
         success: function success(res) {
-          _this.imageSrc = res.tempFilePaths;
-          _this.showCropper = true;
+          _this.imageSrc = res.tempFilePaths[0];
+          uni.getImageInfo({
+            src: res.tempFilePaths[0],
+            success: function success(image) {
+              that.imageWidth = image.width;
+              that.imageHeight = image.height;
+              that.rate = image.width / image.height;
+              that.showCropper = true;
+            } });
+
         } });
 
     } } };exports.default = _default;
