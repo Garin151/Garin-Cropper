@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "uni-app",
+  "usingComponents": {
+    "cpn_cropper": "/components/cpn_cropper/cpn_cropper"
+  }
+}
