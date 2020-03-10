@@ -75,63 +75,72 @@
 				this.offsetY = this.transY;
 			},
 			
-			creatImg() {
-				this.isShow = false
-				this.FX_01()
-				setTimeout(() =>{
-					this.FX_02()
-				},500)
-				setTimeout(() =>{
-					this.FX_03()
-				},1000)
+			async creatImg() {
+				try{
+					this.isShow = false
+					let a = await this.FX_01()
+					console.log(a)
+					let b = await this.FX_02()
+					console.log(b)
+					let c = await this.FX_03()
+					console.log(c)
+				}catch(err) {
+					console.log(err)
+				}
 			},
 			
 			FX_01() {
+				return new Promise((resolve,reject) =>{
 					//在组件，或包含组件的页面里，应使用this.createSelectorQuery()
 					const query = this.createSelectorQuery()
 					query.select(".crop_box").boundingClientRect(data =>{
 						this.left = data.left
 						this.top = data.top
-						//console.log(this.left)
-						//console.log(this.top)
+						resolve("left: " + this.left + "top: " + this.top)
 					}).exec()
+				})
 			},
 			
 			FX_02() {
-				this.tempH = (this.windowWidth - 20)/this.P_rate
-				this.tempH_01 = (this.windowHeight - 50 - this.tempH) / 2
-				this.drawX = this.left - 10
-				this.drawY = this.top - 25 - this.tempH_01
+				return new Promise((resolve,reject) =>{
+					this.tempH = (this.windowWidth - 20)/this.P_rate
+					this.tempH_01 = (this.windowHeight - 50 - this.tempH) / 2
+					this.drawX = this.left - 10
+					this.drawY = this.top - 25 - this.tempH_01
+					resolve("drawX: " + this.drawX + "drawY: " + this.drawY)
+				})
 			},
 			
 			FX_03() {
-				const ctx = uni.createCanvasContext("Fordraw",this);
-				ctx.drawImage(this.P_imageSrc,0,this.tempH_01,this.windowWidth - 20,this.tempH)
-				//避免异步，防止因画布还没画图像，就开始执行导出画布图片的方法。所以将uni.canvasToTempFilePath()放入draw()完成后的回调函数
-				ctx.draw(false,() =>{
-					uni.canvasToTempFilePath({
-						canvasId:"Fordraw",
-						x:this.drawX + 2,
-						y:this.drawY + 15,
-						width:200,
-						height:200,
-						fileType:"jpg",
-						quality:1,
-						// destWidth:
-						// destHeight:
-						success: (res) => {
-							let finalUrl = res.tempFilePath
-							this.$emit("sendImage",finalUrl)
-							uni.saveImageToPhotosAlbum({
-								filePath:res.tempFilePath
-							})
-						},
-						fail: (err) => {
-							console.log(err)
-						}
-					},this)
+				return new Promise((resolve,reject) =>{
+					const ctx = uni.createCanvasContext("Fordraw",this);
+					ctx.drawImage(this.P_imageSrc,0,this.tempH_01,this.windowWidth - 20,this.tempH)
+					//避免异步，防止因画布还没画图像，就开始执行导出画布图片的方法。所以将uni.canvasToTempFilePath()放入draw()完成后的回调函数
+					ctx.draw(false,() =>{
+						uni.canvasToTempFilePath({
+							canvasId:"Fordraw",
+							x:this.drawX + 2,
+							y:this.drawY + 15,
+							width:200,
+							height:200,
+							fileType:"jpg",
+							quality:1,
+							// destWidth:
+							// destHeight:
+							success: (res) => {
+								let finalUrl = res.tempFilePath
+								this.$emit("sendImage",finalUrl)
+								resolve(finalUrl)
+							},
+							fail: (err) => {
+								console.log(err)
+							}
+						},this)
+					})
 				})
 			}
+			
+			
 		}
 	}
 </script>
