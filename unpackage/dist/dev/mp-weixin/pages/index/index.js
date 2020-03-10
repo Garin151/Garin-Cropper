@@ -108,7 +108,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   cpn_cropper: () =>
-    __webpack_require__.e(/*! import() | components/cpn_cropper/cpn_cropper */ "components/cpn_cropper/cpn_cropper").then(__webpack_require__.bind(null, /*! @/components/cpn_cropper/cpn_cropper.vue */ 23))
+    Promise.all(/*! import() | components/cpn_cropper/cpn_cropper */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/cpn_cropper/cpn_cropper")]).then(__webpack_require__.bind(null, /*! @/components/cpn_cropper/cpn_cropper.vue */ 23))
 }
 var render = function() {
   var _vm = this
@@ -145,7 +145,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var cpn_cropper = function cpn_cropper() {return __webpack_require__.e(/*! import() | components/cpn_cropper/cpn_cropper */ "components/cpn_cropper/cpn_cropper").then(__webpack_require__.bind(null, /*! ../../components/cpn_cropper/cpn_cropper.vue */ 23));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var cpn_cropper = function cpn_cropper() {return Promise.all(/*! import() | components/cpn_cropper/cpn_cropper */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/cpn_cropper/cpn_cropper")]).then(__webpack_require__.bind(null, /*! ../../components/cpn_cropper/cpn_cropper.vue */ 23));};var _default =
 
 
 

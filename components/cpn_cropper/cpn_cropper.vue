@@ -75,21 +75,19 @@
 				this.offsetY = this.transY;
 			},
 			
-			creatImg() {
+			async creatImg() {
 				try{
 					this.isShow = false
-					this.FX_01()
-					.then(res =>{
-						console.log(res)
-						return this.FX_02()
-					})
-					.then(res2 =>{
-						console.log(res2)
-						return this.FX_03()
-					})
-					.then(res3 =>{
-						console.log(res3)
-					})
+					await this.FX_01()
+					await this.FX_02()
+					await this.FX_03()
+					//下面是可以打印的版本
+					// let a = await this.FX_01()
+					// console.log(a)
+					// let b = await this.FX_02()
+					// console.log(b)
+					// let c = await this.FX_03()
+					// console.log(c)
 				}catch(err) {
 					console.log(err)
 				}
