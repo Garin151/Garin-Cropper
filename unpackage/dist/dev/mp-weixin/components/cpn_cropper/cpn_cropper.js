@@ -116,7 +116,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -193,52 +193,58 @@ var _default =
       this.offsetY = this.transY;
     },
 
-    creatImg: function () {var _creatImg = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var a, b, c;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;
+    creatImg: function creatImg() {var _this2 = this;
+      try {
+        this.isShow = false;
+        this.FX_01().
+        then(function (res) {
+          console.log(res);
+          return _this2.FX_02();
+        }).
+        then(function (res2) {
+          console.log(res2);
+          return _this2.FX_03();
+        }).
+        then(function (res3) {
+          console.log(res3);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
 
-                this.isShow = false;_context.next = 4;return (
-                  this.FX_01());case 4:a = _context.sent;
-                console.log(a);_context.next = 8;return (
-                  this.FX_02());case 8:b = _context.sent;
-                console.log(b);_context.next = 12;return (
-                  this.FX_03());case 12:c = _context.sent;
-                console.log(c);_context.next = 19;break;case 16:_context.prev = 16;_context.t0 = _context["catch"](0);
-
-                console.log(_context.t0);case 19:case "end":return _context.stop();}}}, _callee, this, [[0, 16]]);}));function creatImg() {return _creatImg.apply(this, arguments);}return creatImg;}(),
-
-
-
-    FX_01: function FX_01() {var _this2 = this;
+    FX_01: function FX_01() {var _this3 = this;
       return new Promise(function (resolve, reject) {
         //在组件，或包含组件的页面里，应使用this.createSelectorQuery()
-        var query = _this2.createSelectorQuery();
+        var query = _this3.createSelectorQuery();
         query.select(".crop_box").boundingClientRect(function (data) {
-          _this2.left = data.left;
-          _this2.top = data.top;
-          resolve("left: " + _this2.left + "top: " + _this2.top);
+          _this3.left = data.left;
+          _this3.top = data.top;
+          resolve("left: " + _this3.left + "   top: " + _this3.top);
         }).exec();
       });
     },
 
-    FX_02: function FX_02() {var _this3 = this;
+    FX_02: function FX_02() {var _this4 = this;
       return new Promise(function (resolve, reject) {
-        _this3.tempH = (_this3.windowWidth - 20) / _this3.P_rate;
-        _this3.tempH_01 = (_this3.windowHeight - 50 - _this3.tempH) / 2;
-        _this3.drawX = _this3.left - 10;
-        _this3.drawY = _this3.top - 25 - _this3.tempH_01;
-        resolve("drawX: " + _this3.drawX + "drawY: " + _this3.drawY);
+        _this4.tempH = (_this4.windowWidth - 20) / _this4.P_rate;
+        _this4.tempH_01 = (_this4.windowHeight - 50 - _this4.tempH) / 2;
+        _this4.drawX = _this4.left - 10;
+        _this4.drawY = _this4.top - 25 - _this4.tempH_01;
+        resolve("drawX: " + _this4.drawX + "   drawY: " + _this4.drawY);
       });
     },
 
-    FX_03: function FX_03() {var _this4 = this;
+    FX_03: function FX_03() {var _this5 = this;
       return new Promise(function (resolve, reject) {
-        var ctx = uni.createCanvasContext("Fordraw", _this4);
-        ctx.drawImage(_this4.P_imageSrc, 0, _this4.tempH_01, _this4.windowWidth - 20, _this4.tempH);
+        var ctx = uni.createCanvasContext("Fordraw", _this5);
+        ctx.drawImage(_this5.P_imageSrc, 0, _this5.tempH_01, _this5.windowWidth - 20, _this5.tempH);
         //避免异步，防止因画布还没画图像，就开始执行导出画布图片的方法。所以将uni.canvasToTempFilePath()放入draw()完成后的回调函数
         ctx.draw(false, function () {
           uni.canvasToTempFilePath({
             canvasId: "Fordraw",
-            x: _this4.drawX + 2,
-            y: _this4.drawY + 15,
+            x: _this5.drawX + 2,
+            y: _this5.drawY + 15,
             width: 200,
             height: 200,
             fileType: "jpg",
@@ -247,13 +253,13 @@ var _default =
             // destHeight:
             success: function success(res) {
               var finalUrl = res.tempFilePath;
-              _this4.$emit("sendImage", finalUrl);
-              resolve(finalUrl);
+              _this5.$emit("sendImage", finalUrl);
+              resolve("ImageUrl: " + finalUrl);
             },
             fail: function fail(err) {
               console.log(err);
             } },
-          _this4);
+          _this5);
         });
       });
     } } };exports.default = _default;

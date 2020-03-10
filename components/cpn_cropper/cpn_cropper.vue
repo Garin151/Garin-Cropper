@@ -75,15 +75,21 @@
 				this.offsetY = this.transY;
 			},
 			
-			async creatImg() {
+			creatImg() {
 				try{
 					this.isShow = false
-					let a = await this.FX_01()
-					console.log(a)
-					let b = await this.FX_02()
-					console.log(b)
-					let c = await this.FX_03()
-					console.log(c)
+					this.FX_01()
+					.then(res =>{
+						console.log(res)
+						return this.FX_02()
+					})
+					.then(res2 =>{
+						console.log(res2)
+						return this.FX_03()
+					})
+					.then(res3 =>{
+						console.log(res3)
+					})
 				}catch(err) {
 					console.log(err)
 				}
@@ -96,7 +102,7 @@
 					query.select(".crop_box").boundingClientRect(data =>{
 						this.left = data.left
 						this.top = data.top
-						resolve("left: " + this.left + "top: " + this.top)
+						resolve("left: " + this.left + "   top: " + this.top)
 					}).exec()
 				})
 			},
@@ -107,7 +113,7 @@
 					this.tempH_01 = (this.windowHeight - 50 - this.tempH) / 2
 					this.drawX = this.left - 10
 					this.drawY = this.top - 25 - this.tempH_01
-					resolve("drawX: " + this.drawX + "drawY: " + this.drawY)
+					resolve("drawX: " + this.drawX + "   drawY: " + this.drawY)
 				})
 			},
 			
@@ -130,7 +136,7 @@
 							success: (res) => {
 								let finalUrl = res.tempFilePath
 								this.$emit("sendImage",finalUrl)
-								resolve(finalUrl)
+								resolve("ImageUrl: " + finalUrl)
 							},
 							fail: (err) => {
 								console.log(err)
